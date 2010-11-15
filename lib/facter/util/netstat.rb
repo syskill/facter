@@ -33,8 +33,10 @@ module Facter::Util::NetStat
     def self.get_ipv4_output
         output = ""
         case Facter.value(:kernel)
-        when 'SunOS', 'FreeBSD', 'NetBSD', 'OpenBSD', 'Darwin'
-            output = %x{/bin/netstat -rn -f inet}
+        when 'SunOS', 'FreeBSD', 'NetBSD', 'OpenBSD'
+            output = %x{/usr/bin/netstat -rn -f inet}
+        when 'Darwin'
+            output = %x{/usr/sbin/netstat -rn -f inet}
         when 'Linux'
             output = %x{/bin/netstat -rn -A inet}
         end
